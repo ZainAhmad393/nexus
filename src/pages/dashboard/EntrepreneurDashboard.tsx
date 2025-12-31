@@ -10,12 +10,19 @@ import { useAuth } from '../../context/AuthContext';
 import { CollaborationRequest } from '../../types';
 import { getRequestsForEntrepreneur } from '../../data/collaborationRequests';
 import { investors } from '../../data/users';
+import { EventInput } from '@fullcalendar/core';
 
-export const EntrepreneurDashboard: React.FC = () => {
+interface Props {
+  events: EventInput[];
+}
+export const EntrepreneurDashboard: React.FC<Props> = ({ events }) => {
   const { user } = useAuth();
   const [collaborationRequests, setCollaborationRequests] = useState<CollaborationRequest[]>([]);
   const [recommendedInvestors, setRecommendedInvestors] = useState(investors.slice(0, 3));
-  
+  const confirmedMeetings = events.filter(
+  (e: any) => e.extendedProps?.status === 'accepted'
+);
+
   useEffect(() => {
     if (user) {
       // Load collaboration requests
@@ -43,7 +50,24 @@ export const EntrepreneurDashboard: React.FC = () => {
           <h1 className="text-2xl font-bold text-gray-900">Welcome, {user.name}</h1>
           <p className="text-gray-600">Here's what's happening with your startup today</p>
         </div>
-        
+        <div>
+  <h2 className="text-lg font-semibold text-gray-900">
+    Confirmed Meetings
+  </h2>
+
+  {confirmedMeetings.length === 0 && (
+    <p className="text-sm text-gray-500">No confirmed meetings</p>
+  )}
+
+  <div className="space-y-1">
+    {confirmedMeetings.map((m: any, i: number) => (
+      <p key={i} className="text-sm">
+        📅 {m.title}
+      </p>
+    ))}
+  </div>
+</div>
+
         <Link to="/investors">
           <Button
             leftIcon={<PlusCircle size={18} />}
@@ -52,8 +76,7 @@ export const EntrepreneurDashboard: React.FC = () => {
           </Button>
         </Link>
       </div>
-      
-      {/* Summary cards */}
+    
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="bg-primary-50 border border-primary-100">
           <CardBody>

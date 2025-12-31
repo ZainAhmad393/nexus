@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { useState } from 'react';
+import { EventInput } from '@fullcalendar/core';
 
 // Layouts
 import { DashboardLayout } from './components/layout/DashboardLayout';
@@ -29,8 +31,15 @@ import { DealsPage } from './pages/deals/DealsPage';
 
 // Chat Pages
 import { ChatPage } from './pages/chat/ChatPage';
+// claender pagge
+import CalendarPage from './pages/CalendarPage';
+import VideoCall from './components/videocomponent/Video';
+import DocumentChamber from './components/DocumentChamber/documentChamber';
+import PaymentSystem from './components/Paymentsystems/PaymentSystem';
+import SecureAuthDashboard from './components/secureandauthdashboard/Security';
 
 function App() {
+  const [events, setEvents] = useState<EventInput[]>([]);
   return (
     <AuthProvider>
       <Router>
@@ -41,7 +50,7 @@ function App() {
           
           {/* Dashboard Routes */}
           <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route path="entrepreneur" element={<EntrepreneurDashboard />} />
+            <Route path="entrepreneur" element={<EntrepreneurDashboard events={events} />} />
             <Route path="investor" element={<InvestorDashboard />} />
           </Route>
           
@@ -63,7 +72,18 @@ function App() {
           <Route path="/messages" element={<DashboardLayout />}>
             <Route index element={<MessagesPage />} />
           </Route>
-          
+          <Route path="/calendar" element={<DashboardLayout />}>
+            <Route index element={<CalendarPage />} />
+          </Route>
+          <Route path="/videocall" element={<DashboardLayout />}>
+            <Route index element={<VideoCall />} />
+          </Route>
+          <Route path="/documentchamber" element={<DashboardLayout />}>
+            <Route index element={<DocumentChamber />} />
+          </Route>
+          <Route path="/paymentsystem" element={<DashboardLayout />}>
+            <Route index element={<PaymentSystem />} />
+          </Route>
           <Route path="/notifications" element={<DashboardLayout />}>
             <Route index element={<NotificationsPage />} />
           </Route>
@@ -72,6 +92,9 @@ function App() {
             <Route index element={<DocumentsPage />} />
           </Route>
           
+          <Route path="/security" element={<DashboardLayout />}>
+            <Route index element={<SecureAuthDashboard />} />
+          </Route>
           <Route path="/settings" element={<DashboardLayout />}>
             <Route index element={<SettingsPage />} />
           </Route>

@@ -3,8 +3,12 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { 
   Home, Building2, CircleDollarSign, Users, MessageCircle, 
-  Bell, FileText, Settings, HelpCircle
+  Bell, FileText, Settings, HelpCircle,
+  Calendar,
+  Video,
+  SearchCheck
 } from 'lucide-react';
+import VideoCall from '../videocomponent/Video';
 
 interface SidebarItemProps {
   to: string;
@@ -43,6 +47,10 @@ export const Sidebar: React.FC = () => {
     { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
     { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
     { to: '/documents', icon: <FileText size={20} />, text: 'Documents' },
+    { to: '/calendar', icon: <Calendar size={20} />, text: 'Calendar' },
+    { to: '/videocall', icon: <Video size={20} />, text: 'Video Call' },
+    { to: '/documentchamber', icon: <FileText size={20} />, text: 'Document Chamber' },
+    { to: '/paymentsystem', icon: <CircleDollarSign size={20} />, text: 'Payment System' },
   ];
   
   const investorItems = [
@@ -58,6 +66,7 @@ export const Sidebar: React.FC = () => {
   
   // Common items at the bottom
   const commonItems = [
+    { to: '/security', icon: <SearchCheck size={20} />, text: 'Security' },
     { to: '/settings', icon: <Settings size={20} />, text: 'Settings' },
     { to: '/help', icon: <HelpCircle size={20} />, text: 'Help & Support' },
   ];
